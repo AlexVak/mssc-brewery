@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RequestMapping("/api/v1/customer")
@@ -33,7 +34,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity handleCustomer(@RequestBody CustomerDto customerDto) {
+    public ResponseEntity handleCustomer(@Valid @RequestBody CustomerDto customerDto) {
         CustomerDto savedDto = customerService.saveNewCustomer(customerDto);
 
         HttpHeaders headers = new HttpHeaders();
@@ -45,7 +46,7 @@ public class CustomerController {
 
     @PutMapping("/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCustomer(@PathVariable UUID customerId, @RequestBody CustomerDto customerDto) {
+    public void updateCustomer(@PathVariable UUID customerId, @Valid @RequestBody CustomerDto customerDto) {
         customerService.updateCustomer(customerId, customerDto);
     }
 
