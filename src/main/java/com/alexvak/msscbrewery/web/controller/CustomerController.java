@@ -5,6 +5,7 @@ import com.alexvak.msscbrewery.web.model.CustomerDto;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.UUID;
 
 @RequestMapping("/api/v1/customer")
@@ -34,7 +34,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity handleCustomer(@Valid @RequestBody CustomerDto customerDto) {
+    public ResponseEntity handleCustomer(@Validated @RequestBody CustomerDto customerDto) {
         CustomerDto savedDto = customerService.saveNewCustomer(customerDto);
 
         HttpHeaders headers = new HttpHeaders();
@@ -46,7 +46,7 @@ public class CustomerController {
 
     @PutMapping("/{customerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateCustomer(@PathVariable UUID customerId, @Valid @RequestBody CustomerDto customerDto) {
+    public void updateCustomer(@PathVariable UUID customerId, @Validated @RequestBody CustomerDto customerDto) {
         customerService.updateCustomer(customerId, customerDto);
     }
 
